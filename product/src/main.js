@@ -1,4 +1,4 @@
 
-const mensage = 'iniciando product';
+const message = 'iniciando product';
 
-console.log(mensage)
+console.log(message)
