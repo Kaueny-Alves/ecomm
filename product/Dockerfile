@@ -1,9 +1,9 @@
 FROM node:14
-WORKDIR /src
+WORKDIR /app
 EXPOSE 3000
 COPY . .
 RUN npm install
 ENTRYPOINT npm start
 
 
-# rodar esse comando no terminal = docker build -t kaueny/src:1.0 .
+# rodar esse comando no terminal = docker build -t kaueny/app:1.0 .
