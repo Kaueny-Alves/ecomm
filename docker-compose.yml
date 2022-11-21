@@ -1,0 +1,15 @@
+version: '3.9'
+services:
+  product:
+    image: pagonxt/product
+    build: product
+    container_name: ecomm
+  
+    ports: 
+      - 3000:3000
+
+
+
+
+#rodar no terminal para subir docker-compose up
+#rodar no terminal para parar docker-compose down
