@@ -1,0 +1,13 @@
+{
+  "name": "account",
+  "version": "1.0.0",
+  "description": "",
+  "main": "creatUserAccount.js",
+  "type":"module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node src/use-case/creatUserAccount.js"
+  },
+  "author": "",
+  "license": "ISC"
+}
