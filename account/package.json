@@ -2,12 +2,15 @@
   "name": "account",
   "version": "1.0.0",
   "description": "",
-  "main": "creatUserAccount.js",
+  "main": "src/use-case/creatUserAccount.js",
   "type":"module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node src/use-case/creatUserAccount.js"
+    "test": "node test/creatUserAccount.test.js",
+    "start": "nodemon src/use-case/creatUserAccount.js"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  }
 }

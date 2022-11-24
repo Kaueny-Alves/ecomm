@@ -1,4 +1,5 @@
 let contas = []
+let date = new Date().toLocaleString("pt-br").substring(0,10);
 
 export function creatUserUseCase(nome, email, senha) {
 
@@ -7,14 +8,13 @@ const user = {
     name: nome,
     email: email,
     password: senha,
-    createdDate: new Date()
+    createdDate: date
   }
 
    contas.push(user)
-   return  user
+
+   return console.log("contas:", contas)
 }
 
-creatUserUseCase("kaueny", 'ka@gmail.com', '123456')
-creatUserUseCase("rafael", 'rafa@gmail.com', '123456')
 
-console.log("contas:", contas)
+
