@@ -13,7 +13,7 @@ const user = {
 
    contas.push(user)
 
-   return console.log("contas:", contas)
+   return console.log("user:", user)
 }
 
 
