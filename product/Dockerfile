@@ -1,9 +1,12 @@
 FROM node:14
-WORKDIR /app
-EXPOSE 3000
+
+WORKDIR /product
+
 COPY . .
+
 RUN npm install
+
 ENTRYPOINT npm start
 
 
-# rodar esse comando no terminal = docker build -t pagonxt/product .
+# rodar esse comando no terminal = docker build -t eccom/product .
