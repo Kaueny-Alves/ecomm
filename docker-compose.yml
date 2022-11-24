@@ -1,12 +1,13 @@
 version: '3.9'
 services:
   product:
-    image: pagonxt/product
+    image: eccom/product
     build: product
-    container_name: ecomm
-  
-    ports: 
-      - 3000:3000
+
+  account:
+    image: eccom/account
+    build: account
+    
 
 
 
