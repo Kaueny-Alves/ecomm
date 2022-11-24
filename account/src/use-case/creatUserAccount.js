@@ -1,19 +1,20 @@
 let contas = []
-let date = new Date().toLocaleString("pt-br").substring(0,10);
+
+let dataAtualFormatada = new Date().toISOString().substring(0,10)
 
 export function creatUserUseCase(nome, email, senha) {
 
-const user = {
+const usuario = {
     id: contas.length + 1,
     name: nome,
     email: email,
     password: senha,
-    createdDate: date
+    createdDate: dataAtualFormatada
   }
 
-   contas.push(user)
+   contas.push(usuario)
 
-   return console.log("user:", user)
+   return console.log("usuario:", usuario)
 }
 
 
