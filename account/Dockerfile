@@ -2,9 +2,11 @@ FROM node:14
 
 WORKDIR /account
 
-COPY . .
+ADD package.json package-lock.json /account/
 
 RUN npm install
+
+COPY . .
 
 ENTRYPOINT npm test
 
