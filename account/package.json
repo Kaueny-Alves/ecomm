@@ -1,0 +1,16 @@
+{
+  "name": "account",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/use-case/creatUserAccount.js",
+  "type":"module",
+  "scripts": {
+    "test": "node test/creatUserAccount.test.js",
+    "start": "nodemon src/use-case/creatUserAccount.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  }
+}
