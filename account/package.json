@@ -2,11 +2,11 @@
   "name": "account",
   "version": "1.0.0",
   "description": "",
-  "main": "src/use-case/creatUserAccount.js",
+  "main": "src/use-case/createUserAccount.js",
   "type":"module",
   "scripts": {
-    "test": "node test/creatUserAccount.test.js",
-    "start": "nodemon src/use-case/creatUserAccount.js"
+    "test": "node test/createUserAccount.test.js",
+    "start": "nodemon src/use-case/createUserAccount.js"
   },
   "author": "",
   "license": "ISC",
