@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "src/use-case/createUserAccount.js",
-  "type":"module",
+  "type": "module",
   "scripts": {
     "test": "node test/createUserAccount.test.js",
     "start": "nodemon src/use-case/createUserAccount.js"
@@ -12,5 +12,8 @@
   "license": "ISC",
   "devDependencies": {
     "nodemon": "^2.0.20"
+  },
+  "dependencies": {
+    "mongodb": "^4.12.1"
   }
 }
