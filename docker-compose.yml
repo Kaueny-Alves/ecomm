@@ -1,16 +1,24 @@
-version: '3.9'
+version: '3'
 services:
-  product:
-    image: eccom/product
-    build: product
 
   account:
     image: eccom/account
     build: account
-    
+    volumes:
+      - ./account:/app
+      
+  account-database:
+    image: mongo
+    container_name: account-database   
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=admin 
+      - MONGO_INITDB_DATABASE=accounts
+    ports:
+      - 27017:27017
 
-
-
-
-#rodar no terminal para subir docker-compose up
-#rodar no terminal para parar docker-compose down
+  product:
+    image: eccom/product
+    build: product
+    volumes:
+      - ./product:/app
