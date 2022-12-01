@@ -1,7 +1,6 @@
 
-import { creatUserUseCase } from "../src/use-case/creatUserAccount.js";
+import { createUserUseCase } from "../src/use-case/createUserAccount.js";
 
-creatUserUseCase("kau", 'ka@gmail.com', '123456')
-creatUserUseCase("rafa", 'rafa@gmail.com', '123456')
-creatUserUseCase("Jaque", 'jaque@gmail.com', '123456')
+const user = await createUserUseCase("kau", 'ka@gmail.com', '123456')
 
+console.log(user)

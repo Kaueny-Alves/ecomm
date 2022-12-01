@@ -1,19 +1,30 @@
-let contas = []
 
-export function creatUserUseCase(nome, email, senha) {
-  const dataAtualFormatada = new Date().toISOString().substring(0, 10)
-  const usuario = {
-    id: contas.length + 1,
-    name: nome,
-    email: email,
-    password: senha,
-    createdDate: dataAtualFormatada
-  }
+import { saveAccount, existsAccountByEmail } from '../repositories/accountRepository.js';
 
-  contas.push(usuario)
+export async function createUserUseCase(name, email, password) {
 
-  return console.log("usuario:", usuario)
+    const accountAlreadyExists = await existsAccountByEmail(email);
+
+    if (accountAlreadyExists) {
+        console.error('Account already exists', email);
+        return;
+    }
+
+    const createdDate = new Date().toISOString().substring(0, 10);
+    const user = {
+        name,
+        email,
+        password,
+        createdDate
+    }
+
+    saveAccount(user);
+    return user
 }
 
+
+    console.log('Creating account ======= ')
+    const account = await createUserUseCase('Kaueny', 'kaka@ka.com', '123456');
+    console.log(account);
 
 
