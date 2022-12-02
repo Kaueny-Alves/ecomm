@@ -5,8 +5,8 @@
   "main": "src/use-case/createUserAccount.js",
   "type": "module",
   "scripts": {
-    "test": "node test/createUserAccount.test.js",
-    "start": "nodemon src/use-case/createUserAccount.js"
+    "start": "nodemon test/createUserAccount.test.js",
+    "test": "nodemon src/use-case/createUserAccount.js"
   },
   "author": "",
   "license": "ISC",
