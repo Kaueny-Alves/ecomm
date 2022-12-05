@@ -2,15 +2,18 @@
   "name": "account",
   "version": "1.0.0",
   "description": "",
-  "main": "src/use-case/creatUserAccount.js",
-  "type":"module",
+  "main": "src/use-case/createUserAccount.js",
+  "type": "module",
   "scripts": {
-    "test": "node test/creatUserAccount.test.js",
-    "start": "nodemon src/use-case/creatUserAccount.js"
+    "start": "nodemon test/createUserAccount.test.js",
+    "test": "nodemon src/use-case/createUserAccount.js"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "nodemon": "^2.0.20"
+  },
+  "dependencies": {
+    "mongodb": "^4.12.1"
   }
 }

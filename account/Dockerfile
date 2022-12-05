@@ -2,7 +2,7 @@ FROM node:18
 
 WORKDIR /app
 
-ADD package.json package-lock.json /account/
+COPY package*.json /app/
 
 RUN npm install
 
