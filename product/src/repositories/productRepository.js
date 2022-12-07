@@ -9,7 +9,7 @@ export async function saveProduct(product) {
 
 export async function findProducts() {
 
-    const listProducts = products.map(product => product)
+    const listProducts = products
     return listProducts
 
 }

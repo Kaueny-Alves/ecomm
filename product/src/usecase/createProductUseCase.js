@@ -7,7 +7,7 @@ export async function createProductUseCase(product) {
 
     const createProduct = product
     createProduct.productId = id;
-    createProduct.createdDate = createdDate
+    createProduct.createdDate = createdDate;
 
     await saveProduct(createProduct)
     return createProduct;
