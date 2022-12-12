@@ -1,14 +1,19 @@
-const Router = require('express');
+import { Router } from 'express';
+import { createUserUseCase } from "../src/use-case/createUserAccount.js";
 
-const router = Router();
+export const router = Router();
 
 router.get('/', (req, res) => {
     res.send('Hello World!')
 });
 
-router.post('/accounts', function (req, res) {
-    const user = req.body
-    res.status(201).json(user);
+router.post('/accounts', async function (req, res) {
+    const nameUser = req.body.nameUser
+    const email = req.body.email
+    const password = req.body.password
+    const account = await createUserUseCase(nameUser, email, password);
+
+    res.status(201).json(account);
 });
 
-module.exports = router;
+
