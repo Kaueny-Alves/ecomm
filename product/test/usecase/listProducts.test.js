@@ -9,5 +9,4 @@ console.log("array vazio: ", productsList);
 
 
 await createProductUseCase(produto);
-
 console.log("lista de produtos: ", productsList);

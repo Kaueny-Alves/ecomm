@@ -2,10 +2,11 @@
   "name": "account",
   "version": "1.0.0",
   "description": "",
-  "main": "src/use-case/createUserAccount.js",
-  "type": "module",
+  "main": "src/main.js",
+  "type": "commonjs",
+
   "scripts": {
-    "start": "nodemon test/createUserAccount.test.js",
+    "start": "nodemon main.js",
     "test": "nodemon src/use-case/createUserAccount.js"
   },
   "author": "",
@@ -14,6 +15,7 @@
     "nodemon": "^2.0.20"
   },
   "dependencies": {
+    "express": "^4.18.2",
     "mongodb": "^4.12.1"
   }
 }

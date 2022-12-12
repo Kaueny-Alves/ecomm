@@ -6,6 +6,8 @@ services:
     build: account
     volumes:
       - ./account:/app
+    ports:
+      - 3000:3000
       
   account-database:
     image: mongo
