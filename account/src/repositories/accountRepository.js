@@ -31,6 +31,6 @@ export async function findAccountByEmail(email) {
 }
 
 async function connectionClosed() {
-    connection.close;
+    connection.close();
     console.log("connection closed =======")
 }
