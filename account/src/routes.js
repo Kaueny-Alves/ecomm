@@ -7,30 +7,23 @@ router.get('/', (req, res) => {
     res.send('Hello World!')
 });
 
-router.post('/accounts', async function (req, res) {
+router.post('/accounts', function (req, res) {
 
+    const { name, email, password } = req.body
+    createUserUseCase(name, email, password)
+        .then((data) => {
+            console.log(data)
+            let user = {
+                name: data.name,
+                email: data.email,
+                date: data.createdDate
+            }
 
-    try {
-        const { nameUser, email, password } = req.body
-        const account = await createUserUseCase(nameUser, email, password);
-
-        if (!account) {
-            res.status(400).send('Something broke when creating account!');
-            return 
-        }
-
-        const user = {
-            name: account.name,
-            email: account.email,
-            date: account.createdDate
-        }
-
-        res.status(201).json(user);
-
-    } catch (e) {
-        console.error("Error when creating account: ", e.message.stack);
-    }
-
+            res.status(201).json(user);
+        })
+        .catch((error) => {
+            res.status(400).json({ status: 'Error creating user!', message: error.message });
+        })
 });
 
 
