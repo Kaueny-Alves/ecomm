@@ -1,4 +1,4 @@
-import { createProductUseCase } from "../../src/usecase/createProductUseCase.js";
+import { createProductUseCase } from "../../src/use-case/createProductUseCase.js";
 import { produto } from "./products.js";
 
 
