@@ -1,10 +1,17 @@
 import { Router } from 'express';
 import { createProductUseCase } from "../src/use-case/createProductUseCase.js";
+import { listProducts } from './use-case/listProducts.js';
 
 export const router = Router();
 
-router.get('/', (req, res) => {
-    res.send('Hello World!')
+router.get('/products', (req, res) => {
+    listProducts()
+        .then((data) => {
+            res.status(200).json(data);
+        })
+        .catch((error) => {
+            res.status(400).json({ status: 'Error getting product!', message: error.message });
+        })
 });
 
 router.post('/products', function (req, res) {
@@ -15,7 +22,7 @@ router.post('/products', function (req, res) {
             res.status(201).json(data);
         })
         .catch((error) => {
-            res.status(400).json({ status: 'Error creating user!', message: error.message });
+            res.status(400).json({ status: 'Error fetching products!', message: error.message });
         })
 });
 
