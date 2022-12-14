@@ -1,7 +1,14 @@
 import { Router } from 'express';
 import { createUserUseCase } from "../src/use-case/createUserAccount.js";
+import bcrypt from 'bcryptjs';
 
-export const router = Router();
+const router = Router();
+
+function encodePass(password) {
+    const saltRounds = 10;
+    const hash = bcrypt.hashSync(password, saltRounds);
+    return hash;
+}
 
 router.get('/', (req, res) => {
     res.send('Hello World!')
@@ -10,7 +17,10 @@ router.get('/', (req, res) => {
 router.post('/accounts', function (req, res) {
 
     const { name, email, password } = req.body
-    createUserUseCase(name, email, password)
+
+    const pass = encodePass(password)
+   
+    createUserUseCase(name, email, pass)
         .then((data) => {
             console.log(data)
             let user = {
@@ -26,4 +36,9 @@ router.post('/accounts', function (req, res) {
         })
 });
 
+// async function decodePass(password, hash) {
+//     const decoded = await bcrypt.compare(password, hash);
+//     return decoded;
+// }
 
+export { router };
