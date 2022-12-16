@@ -26,7 +26,7 @@ export async function findAccountByEmail(email) {
         const account = await collection.findOne({ email });
         return account;
     } catch (e) {
-        console.error("error fetching email:=======", e.message.stack)  
+        console.error("error fetching email:=======", e.message.stack)
     }
 }
 
