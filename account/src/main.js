@@ -10,7 +10,7 @@ app.use(router);
 
 
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
+  console.log(`Account app listening on port ${port}`)
 });
 
 

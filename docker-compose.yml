@@ -25,4 +25,4 @@ services:
     volumes:
       - ./product:/app
     ports:
-      - 3001:3001
+      - 3001:3000
