@@ -2,11 +2,10 @@
   "name": "account",
   "version": "1.0.0",
   "description": "",
-  "main": "src/use-case/createUserAccount.js",
+  "main": "src/main.js",
   "type": "module",
   "scripts": {
-    "start": "nodemon test/createUserAccount.test.js",
-    "test": "nodemon src/use-case/createUserAccount.js"
+    "start": "nodemon main.js"
   },
   "author": "",
   "license": "ISC",
@@ -14,6 +13,8 @@
     "nodemon": "^2.0.20"
   },
   "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "express": "^4.18.2",
     "mongodb": "^4.12.1"
   }
 }
