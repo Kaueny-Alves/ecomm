@@ -2,7 +2,7 @@ import { randomUUID } from 'crypto';
 import { saveAccount, findAccountByEmail } from '../repositories/accountRepository.js';
 import { encode } from '../helpers/encode.js'
 
-export async function createUserUseCase(name, email, passWord) {
+export async function createUserUseCase(name, email, password) {
 
     const accountAlreadyExists = await findAccountByEmail(email);
 
@@ -13,14 +13,12 @@ export async function createUserUseCase(name, email, passWord) {
 
     const id = randomUUID();
     const createdDate = new Date().toISOString().substring(0, 10);
-    const password = encode(passWord)
-
     const user = {
         id,
         createdDate,
         name,
         email,
-        password,
+        password: encode(password),
     }
 
     saveAccount(user);
