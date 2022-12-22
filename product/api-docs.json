@@ -33,8 +33,8 @@
                                     "value": {
                                         "produto": {
                                             "nome": "coca",
-                                            "valor": 2,
-                                            "quantidade": 1,
+                                            "valor": "2",
+                                            "quantidade": "1",
                                             "descricao": "refrigerante lata",
                                             "categoria": "bebidas",
                                             "caracteristicas": [
@@ -71,8 +71,8 @@
                                             "createdDate": "2022-12-22",
                                             "produto": {
                                                 "nome": "coca",
-                                                "valor": 2,
-                                                "quantidade": 1,
+                                                "valor": "2",
+                                                "quantidade": "1",
                                                 "descricao": "refrigerante lata",
                                                 "categoria": "bebidas",
                                                 "caracteristicas": [
@@ -117,8 +117,8 @@
                                             "createdDate": "2022-12-22",
                                             "produto": {
                                                 "nome": "coca",
-                                                "valor": 2,
-                                                "quantidade": 1,
+                                                "valor": "2",
+                                                "quantidade": "1",
                                                 "descricao": "refrigerante lata",
                                                 "categoria": "bebidas",
                                                 "caracteristicas": [
