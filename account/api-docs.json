@@ -45,7 +45,21 @@
                         "description": "Error creating user!"
                     },
                     "201": {
-                        "description": "Created"
+                        "description": "Created",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "account": {
+                                        "value": {
+                                            "id": "fc3e4892-6c2d-4d7e-8983-0fe7f3a847d7",
+                                            "name": "kaueny",
+                                            "email": "kaueny@gmail.com",
+                                            "date": "2022-12-22"
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
