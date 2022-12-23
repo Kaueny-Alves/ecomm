@@ -4,6 +4,7 @@ services:
   account:
     image: eccom/account
     build: account
+    entrypoint: npm run start-dev
     volumes:
       - ./account:/app
     ports:
@@ -22,6 +23,7 @@ services:
   product:
     image: eccom/product
     build: product
+    entrypoint: npm run start-dev
     volumes:
       - ./product:/app
     ports:
