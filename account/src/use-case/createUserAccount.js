@@ -1,13 +1,6 @@
-import bcrypt from 'bcryptjs';
 import { randomUUID } from 'crypto';
 import { saveAccount, findAccountByEmail } from '../repositories/accountRepository.js';
-
-function encode(password) {
-    const saltRounds = 10;
-    const hash = bcrypt.hashSync(password, saltRounds);
-    return hash;
-}
-
+import { encode } from '../helpers/encode.js'
 
 export async function createUserUseCase(name, email, password) {
 
@@ -20,14 +13,12 @@ export async function createUserUseCase(name, email, password) {
 
     const id = randomUUID();
     const createdDate = new Date().toISOString().substring(0, 10);
-    const encodedPassword = encode(password)
-
     const user = {
         id,
         createdDate,
         name,
         email,
-        encodedPassword,
+        password: encode(password),
     }
 
     saveAccount(user);

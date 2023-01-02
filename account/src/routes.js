@@ -11,7 +11,7 @@ router.post('/accounts', function (req, res) {
     createUserUseCase(name, email, password)
         .then((data) => {
 
-            let user = {
+            const user = {
                 id: data.id,
                 name: data.name,
                 email: data.email,
