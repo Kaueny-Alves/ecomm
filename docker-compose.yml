@@ -9,7 +9,7 @@ services:
       - ./account:/app
     ports:
       - 3000:3000
-      
+    
   account-database:
     image: mongo
     container_name: account-database   
@@ -28,3 +28,13 @@ services:
       - ./product:/app
     ports:
       - 3001:3000
+
+  product-database:
+    image: mysql
+    container_name: product-database
+    environment:
+      - MYSQL_DATABASE=products
+      - MYSQL_USERNAME=root
+      - MYSQL_ALLOW_EMPTY_PASSWORD=true
+    ports: 
+      - 3307:3306
