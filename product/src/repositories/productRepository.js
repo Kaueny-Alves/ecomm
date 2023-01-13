@@ -1,26 +1,31 @@
 import { Product } from '../models/product.js';
-import { client } from './clientDatabase.js';
+import { ProductFeature } from '../models/product_feature.js';
+import { ProductImage } from '../models/product_image.js';
 
-
-
-
-export const Connection = async () => {
-    try {
-        await client.authenticate();
-        console.log('Connection has been established successfully.');
-    } catch (error) {
-        console.error('Unable to connect to the database:', error.message);
-    }
-}
 
 export async function saveProduct(product) {
 
-    const createdProduct = await Product.create(product);
+    const createdProduct = await Product.create(product, {
+        include: [
+            { association: Product.ProductFeature, as: 'features', },
+            { association: Product.ProductImage, as: 'images' }
+        ]
+
+    });
     await createdProduct.save();
     return createdProduct;
 }
 
 export async function findProducts() {
-    const allProducts = await Product.findAll();
+    const allProducts = await Product.findAll({
+        include: [
+            {
+                model: ProductFeature,
+                as: 'features'
+            }, {
+                model: ProductImage,
+                as: 'images'
+            }]
+    });
     return allProducts
 }

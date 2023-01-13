@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "start": "node --trace-warnings src/main.js",
-    "start-dev": "nodemon main.js",
+    "start-dev": "nodemon -e yaml,yml,js,json main.js",
     "migrate-up": "npx sequelize-cli db:migrate",
     "migrate-undo": "npx sequelize-cli db:migrate:undo",
     "seed": "npx sequelize-cli db:seed:all"
@@ -24,6 +24,7 @@
     "path": "^0.12.7",
     "sequelize": "^6.28.0",
     "sequelize-cli": "^6.5.2",
-    "swagger-ui-express": "^4.6.0"
+    "swagger-ui-express": "^4.6.0",
+    "yamljs": "^0.3.0"
   }
 }

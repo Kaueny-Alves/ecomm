@@ -2,6 +2,8 @@ version: '3'
 services:
 
   account:
+    depends_on:
+      - account-database
     image: eccom/account
     build: account
     entrypoint: npm run start-dev
@@ -21,6 +23,8 @@ services:
       - 27017:27017
 
   product:
+    depends_on:
+      - product-database
     image: eccom/product
     build: product
     entrypoint: npm run start-dev
@@ -33,8 +37,10 @@ services:
     image: mysql
     container_name: product-database
     environment:
-      - MYSQL_DATABASE=products
-      - MYSQL_USERNAME=root
       - MYSQL_ALLOW_EMPTY_PASSWORD=true
+      - MYSQL_DATABASE=products
+      - MYSQL_USER=admin
+      - MYSQL_PASSWORD=admin
+      
     ports: 
       - 3307:3306
