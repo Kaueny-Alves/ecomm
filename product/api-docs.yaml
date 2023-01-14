@@ -1,0 +1,110 @@
+openapi: 3.0.1
+info:
+    version: 1.0.0
+    title: Product Restful API
+    description: Restful API that deals with Products
+    contact:
+        name: Dev Contacts
+        url: "https://www.eccom.com.br"
+        email: sac@eccom.com.br
+servers:
+    - url: "http://localhost:3000"
+      description: Server 1
+paths:
+    /products:
+        summary: creates a product
+        description: "Given provided product data, creates a product in the database"
+        post:
+            tags: [ Product ]
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/ProductData"
+            responses:
+                201:
+                    description: Product created
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/CreatedProductData"
+
+        get:
+            tags: [ Product ]
+            summary: "lista de produtos cadastrados"
+            responses:
+                200:
+                    description: Success
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: "#/components/schemas/ProductData"
+
+components:
+    schemas:
+        ImagemData:
+            type: object
+            properties:
+                url:
+                    type: string
+                descricao:
+                    type: string
+        CaracteristicaData:
+            type: object
+            properties:
+                nome:
+                    type: string
+                descricao:
+                    type: string
+        ProductData:
+            type: object
+            properties:
+                usuarioId:
+                    type: string
+                name:
+                    type: string
+                description:
+                    type: string
+                category:
+                    type: string
+                quantity:
+                    type: integer
+                value:
+                    type: number
+                features:
+                    type: array
+                    items:
+                        $ref: "#/components/schemas/CaracteristicaData"
+                images:
+                    type: array
+                    items:
+                        $ref: "#/components/schemas/ImagemData"
+        CreatedProductData:
+            type: object
+            properties:
+                usuarioId:
+                    type: string
+                createdDate:
+                    type: string
+                id:
+                    type: string
+                name:
+                    type: string
+                description:
+                    type: string
+                category:
+                    type: string
+                quantity:
+                    type: integer
+                value:
+                    type: number
+                features:
+                    type: array
+                    items:
+                        $ref: "#/components/schemas/CaracteristicaData"
+                images:
+                    type: array
+                    items:
+                        $ref: "#/components/schemas/ImagemData"
