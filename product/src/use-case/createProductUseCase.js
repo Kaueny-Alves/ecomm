@@ -5,7 +5,7 @@ export async function createProductUseCase(product) {
     const id_user = randomUUID();
     const createProduct = { id_user, ...product }
 
-    await saveProduct(createProduct)
-    return createProduct;
+    const products = await saveProduct(createProduct)
+    return products;
 }
 

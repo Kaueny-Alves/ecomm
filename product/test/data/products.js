@@ -1,22 +1,22 @@
 import { randomUUID } from 'crypto';
 
 export const produto = {
-    usuarioId: randomUUID(),
-    nome: "coca",
-    valor: 2,
-    quantidade: 1,
-    descricao: "refrigerante lata",
-    categoria: "bebidas",
-    caracteristicas: [
+    id_user: randomUUID(),
+    name: "coca",
+    value: 2,
+    quantity: 1,
+    description: "refrigerante lata",
+    category: "bebidas",
+    features: [
         {
-            nome: "refrigerante",
-            descricao: " bebidas",
+            name: "refrigerante",
+            description: " bebidas",
         }
     ],
-    imagens: [
+    images: [
         {
             url: "https://pixabay.com/pt/photos/posso-lata-de-cola-cola-bebida-592366/",
-            descricao: "refrigerante de lata",
+            description: "refrigerante de lata",
         }
     ],
 }
