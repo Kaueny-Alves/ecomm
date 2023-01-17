@@ -1,5 +1,7 @@
-export const produto =
-{
+import { randomUUID } from 'crypto';
+
+export const produto = {
+    usuarioId: randomUUID(),
     nome: "coca",
     valor: 2,
     quantidade: 1,
