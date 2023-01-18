@@ -5,6 +5,7 @@ import { produto } from "../data/products.js";
 describe('Product Creation', () => {
 
     it('should create a product given required product data', async () => {
+
         await request(app)
             .post('/products')
             .set('Content-Type', 'application/json')
@@ -14,6 +15,7 @@ describe('Product Creation', () => {
             .expect(({ body }) => {
                 expect(body).toEqual({
                     ...produto,
+                    id_user: body.id_user,
                     id: expect.any(Number),
                     createdAt: expect.any(String),
                     updatedAt: expect.any(String),

@@ -1,9 +1,7 @@
-import { randomUUID } from 'crypto';
 
 export const produto = {
-    id_user: randomUUID(),
     name: "coca",
-    value: 2,
+    value: "2",
     quantity: 1,
     description: "refrigerante lata",
     category: "bebidas",
