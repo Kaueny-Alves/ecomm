@@ -7,7 +7,7 @@
   "scripts": {
     "start": "env-cmd node --trace-warnings src/main.js",
     "start-dev": "env-cmd -f .env.test nodemon main.js",
-    "test": "env-cmd -f .env.test node --trace-warnings --experimental-vm-modules node_modules/jest/bin/jest.js --detectOpenHandles --watch --coverage"
+    "test": "env-cmd -f .env.test node --trace-warnings --experimental-vm-modules node_modules/jest/bin/jest.js --detectOpenHandles --watchAllw --coverage"
   },
   "author": "",
   "license": "ISC",

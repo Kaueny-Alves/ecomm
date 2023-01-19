@@ -4,7 +4,19 @@ import { produto } from "../data/products.js";
 
 describe('Product List', () => {
 
+    it.skip('should return a empty list ', async () => {
+        await request(app)
+            .get('/products')
+            .set('Content-Type', 'application/json')
+            .set('Accept', 'application/json')
+            .expect(200)
+            .expect(({ body }) => {
+                expect(body).toEqual([]);
+            });
+    });
+
     it('should return a list a product ', async () => {
+
         await request(app)
             .get('/products')
             .set('Content-Type', 'application/json')
