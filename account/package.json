@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "start": "env-cmd node --trace-warnings src/main.js",
-    "start-dev": "env-cmd -f .env.test nodemon main.js",
+    "start-dev": "env-cmd nodemon main.js",
     "test": "env-cmd -f .env.test node --trace-warnings --experimental-vm-modules node_modules/jest/bin/jest.js --detectOpenHandles --watchAllw --coverage"
   },
   "author": "",
@@ -24,6 +24,7 @@
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.0",
     "mongodb": "^4.12.1",
     "swagger-ui-express": "^4.6.0"
   }
