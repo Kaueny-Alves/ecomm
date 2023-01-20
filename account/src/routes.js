@@ -7,11 +7,11 @@ import { findAccountByEmail, listAccounts } from './repositories/accountReposito
 
 const router = Router();
 
-router.post('/accounts', async function (req, res) {
+router.post('/accounts/register', async function (req, res) {
 
     const { name, email, password } = req.body
 
-    createUserUseCase(name, email, password)
+    await createUserUseCase(name, email, password)
         .then((data) => {
 
             res.status(201).json({
@@ -23,42 +23,48 @@ router.post('/accounts', async function (req, res) {
 
         })
         .catch((error) => {
-
-            res.status(400)
-                .json({
-                    status: 'Error creating user!',
-                    message: error.message
-                });
+            res.status(400).json({ status: 'Error creating user!', message: error.message });
         })
 
 });
 
+router.post('/accounts/login', async (req, res) => {
+
+    try {
+
+        const { email, password } = req.body
+        const user = await findAccountByEmail(email)
+            .then()
+            .catch((e) => {
+                console.error(e.message.stack)
+            })
+
+        const isPasswordCorrect = await comparePassword(password, user.password)
+
+        if (email == user.email || password == isPasswordCorrect) {
+            const id = user.id;
+            const token = generateToken(id)
+            return res.status(200).json({ auth: true, token: token });
+        }
+
+    } catch (e) {
+        res.status(400).json({ message: e.message });
+    }
+})
+
 router.get('/accounts', async (req, res) => {
 
     listAccounts().then((data) => {
-        return res.status(200).json(data);
+        return res.status(200).json({
+            id: data.id,
+            name: data.name,
+            email: data.email,
+        });
     }).catch((e) => {
-        console.error(e.message.stack)
+        res.status(400).json({ message: e.message });
     })
 
 })
 
-router.post('/accounts/login', async (req, res) => {
 
-    const { email, password } = req.body
-    const user = await findAccountByEmail(email).catch((e) => {
-        console.error(e.message.stack)
-    })
-
-    const isPasswordCorrect = await comparePassword(password, user.password)
-
-    console.log(isPasswordCorrect)
-
-    if (!isPasswordCorrect) {
-        const id = user.id;
-        const token = generateToken(id)
-        return res.json({ auth: true, token: token });
-    }
-
-})
 export { router };
