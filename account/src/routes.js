@@ -23,7 +23,12 @@ router.post('/accounts/register', async function (req, res) {
 
         })
         .catch((error) => {
-            res.status(400).json({ status: 'Error creating user!', message: error.message });
+
+            res.status(400)
+                .json({
+                    status: 'Error creating user!',
+                    message: error.message
+                });
         })
 
 });
@@ -44,24 +49,21 @@ router.post('/accounts/login', async (req, res) => {
         if (email == user.email || password == isPasswordCorrect) {
             const id = user.id;
             const token = generateToken(id)
-            return res.status(200).json({ auth: true, token: token });
+            return res.status(201).json({ auth: true, token: token });
         }
 
-    } catch (e) {
-        res.status(400).json({ message: e.message });
+    } catch (error) {
+        res.status(400).json({ auth: false, message: error.message, status: "usuario ou senha incorretos!" });
     }
+
 })
 
 router.get('/accounts', async (req, res) => {
 
     listAccounts().then((data) => {
-        return res.status(200).json({
-            id: data.id,
-            name: data.name,
-            email: data.email,
-        });
+        return res.status(200).json(data);
     }).catch((e) => {
-        res.status(400).json({ message: e.message });
+        console.error(e.message.stack)
     })
 
 })
