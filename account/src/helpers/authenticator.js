@@ -6,3 +6,8 @@ export function generateToken(id) {
     });
 
 }
+
+// export function generateToken(id) {
+//     return jwt.sign({ id }, process.env.JWT_KEY);
+
+// }
