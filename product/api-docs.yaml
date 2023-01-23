@@ -8,19 +8,20 @@ info:
         url: "https://www.eccom.com.br"
         email: sac@eccom.com.br
 servers:
-    - url: "http://localhost:3000"
+    - url: "http://localhost:3001"
       description: Server 1
 paths:
     /products:
-        summary: creates a product
         description: "Given provided product data, creates a product in the database"
         post:
-            tags: [ Product ]
+            tags: [Product]
+            summary: "cadastro de produto"
             requestBody:
                 content:
                     application/json:
                         schema:
                             $ref: "#/components/schemas/ProductData"
+                required: true
             responses:
                 201:
                     description: Product created
@@ -28,9 +29,10 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/CreatedProductData"
-
+            security:
+                - auth: []
         get:
-            tags: [ Product ]
+            tags: [Product]
             summary: "lista de produtos cadastrados"
             responses:
                 200:
@@ -41,7 +43,6 @@ paths:
                                 type: array
                                 items:
                                     $ref: "#/components/schemas/ProductData"
-
 components:
     schemas:
         ImagemData:
@@ -108,3 +109,8 @@ components:
                     type: array
                     items:
                         $ref: "#/components/schemas/ImagemData"
+    securitySchemes:
+        auth:
+            type: http
+            scheme: bearer
+            bearerFormat: JWT
