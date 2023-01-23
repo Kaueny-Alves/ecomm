@@ -2,7 +2,7 @@ import { Router } from 'express';
 import { createUserUseCase } from "../src/use-case/createUserAccount.js";
 import { generateToken } from './helpers/authenticator.js';
 import { comparePassword } from './helpers/encodePassword.js';
-import { findAccountByEmail, listAccounts } from './repositories/accountRepository.js';
+import { findAccountByEmail } from './repositories/accountRepository.js';
 
 
 const router = Router();
@@ -24,7 +24,7 @@ router.post('/accounts/register', async function (req, res) {
         })
         .catch((error) => {
 
-            res.status(400)
+            res.status(500)
                 .json({
                     status: 'Error creating user!',
                     message: error.message
@@ -35,38 +35,26 @@ router.post('/accounts/register', async function (req, res) {
 
 router.post('/accounts/login', async (req, res) => {
 
-    try {
+    const { email, password } = req.body
 
-        const { email, password } = req.body
-        const user = await findAccountByEmail(email)
-            .then()
-            .catch((e) => {
-                console.error(e.message.stack)
-            })
+    await findAccountByEmail(email)
+        .then(async (user) => {
+            const isPasswordCorrect = await comparePassword(password, user.password)
 
-        const isPasswordCorrect = await comparePassword(password, user.password)
+            if (email !== user.email || isPasswordCorrect === false) {
+                return res.status(400).json({ auth: false, message: "email ou senha incorretos!" });
+            } else {
+                const id = user.id;
+                const token = generateToken(id)
+                return res.status(201).json({ auth: true, token: token });
+            }
 
-        if (email == user.email || password == isPasswordCorrect) {
-            const id = user.id;
-            const token = generateToken(id)
-            return res.status(201).json({ auth: true, token: token });
-        }
+        })
+        .catch(() => {
+            res.status(400).json({ auth: false, message: "email ou senha incorretos!" });
 
-    } catch (error) {
-        res.status(400).json({ auth: false, message: error.message, status: "usuario ou senha incorretos!" });
-    }
-
-})
-
-router.get('/accounts', async (req, res) => {
-
-    listAccounts().then((data) => {
-        return res.status(200).json(data);
-    }).catch((e) => {
-        console.error(e.message.stack)
-    })
+        })
 
 })
-
 
 export { router };
