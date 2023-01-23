@@ -17,14 +17,16 @@ router.get('/products', (req, res) => {
 
 router.post('/products', function (req, res) {
 
-     const payload = tokenValidated(req, res)
-   
-     if (!payload) return res.status(401).send('Access denied. No token provided.')
+    const payload = tokenValidated(req, res)
+
+    if (!payload) return res.status(401).send('Access denied. No token provided.')
 
     const id = payload.id
 
+    if (!id) return res.status(401).send('Forbidden.')
+
     const product = req.body
-    
+
     createProductUseCase(product, id)
         .then((data) => {
             res.status(201).json(data);
