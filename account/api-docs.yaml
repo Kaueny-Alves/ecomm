@@ -1,0 +1,114 @@
+openapi: 3.0.1
+info:
+  version: 1.0.0
+  title: Accounts API
+  description: Restful API that deals with Accounts
+  contact:
+    name: Sac Contacts
+    url: "https://www.eccom.com.br"
+    email: sac@eccom.com.br
+servers:
+  - url: "http://localhost:3000"
+    description: Server 1
+paths:
+  /accounts/register:
+    description: "Given provided account data, creates a account in the database"
+    post:
+      tags: [Account]
+      summary: "cadastro de usuário"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AccountData"
+      responses:
+        201:
+          description: Product created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CreatedAccountData"
+        500:
+          description: Error creating account
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: "#/components/schemas/AccountDataError"
+
+  /accounts/loggin:
+    description: "login"
+    post:
+      tags: [Account]
+      summary: "criação de token"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AccountLogin"
+      responses:
+        201:
+          description: token created
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: "#/components/schemas/AccountToken"
+        400:
+          description: token error
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: "#/components/schemas/AccountTokenError"
+
+components:
+  schemas:
+    AccountData:
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+    AccountDataError:
+      type: object
+      properties:
+        status:
+          type: string
+        message:
+          type: string
+    CreatedAccountData:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        email:
+          type: string
+        createdDate:
+          type: string
+    AccountToken:
+      type: object
+      properties:
+        auth:
+          type: string
+        token:
+          type: string
+    AccountTokenError:
+      type: object
+      properties:
+        auth:
+          type: string
+        message:
+          type: string
+    AccountLogin:
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
