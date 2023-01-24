@@ -19,11 +19,11 @@ router.post('/products', function (req, res) {
 
     const payload = tokenValidated(req, res)
 
-    if (!payload) return res.status(401).send('Access denied. No token provided.')
+    if (!payload) return res.status(401).json({ message: 'Access denied. No token provided.' })
 
     const id = payload.id
 
-    if (!id) return res.status(401).send('Forbidden.')
+    if (!id) return res.status(403).send('Forbidden.')
 
     const product = req.body
 

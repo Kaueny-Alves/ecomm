@@ -49,4 +49,33 @@ describe('Product Creation', () => {
                 });
             });
     });
+
+    it('erro ao criar produto sem o token', async () => {
+
+        await request(app)
+            .post('/products')
+            .set('Content-Type', 'application/json')
+            .set('Accept', 'application/json')
+            .set('Access-Control-Allow-Origin', '*')
+            .send(produto)
+            .expect(401)
+            .expect(({ body }) => {
+                expect(body).toEqual({ });
+            });
+    });
+
+    it('erro ao criar produto com o token errado', async () => {
+
+        await request(app)
+            .post('/products')
+            .set('Content-Type', 'application/json')
+            .set('Accept', 'application/json')
+            .set('Access-Control-Allow-Origin', '*')
+            .set('Authorization',"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9")
+            .send(produto)
+            .expect(500)
+            .expect(({ body }) => {
+                expect(body).toEqual({ });
+            });
+    });
 });
