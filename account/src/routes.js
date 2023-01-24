@@ -1,9 +1,6 @@
 import { Router } from 'express';
 import { createUserUseCase } from "../src/use-case/createUserAccount.js";
-import { generateToken } from './helpers/authenticator.js';
-import { comparePassword } from './helpers/encodePassword.js';
-import { findAccountByEmail } from './repositories/accountRepository.js';
-
+import { createToken } from './use-case/createTokenUseCase.js';
 
 const router = Router();
 
@@ -37,24 +34,17 @@ router.post('/accounts/login', async (req, res) => {
 
     const { email, password } = req.body
 
-    await findAccountByEmail(email)
-        .then(async (user) => {
-            const isPasswordCorrect = await comparePassword(password, user.password)
+    try {
+        const token = await createToken(email, password)
 
-            if (email !== user.email || isPasswordCorrect === false) {
-                return res.status(400).json({ auth: false, message: "email ou senha incorretos!" });
-            } else {
-                const id = user.id;
-                const token = generateToken(id)
-                return res.status(201).json({ auth: true, token: token });
-            }
-
-        })
-        .catch(() => {
-            res.status(400).json({ auth: false, message: "email ou senha incorretos!" });
-
-        })
-
+        if (token === null) {
+            res.status(401).json({ auth: false, message: "email ou senha incorretos!" });
+        } else {
+            res.status(201).json({ auth: true, token: token });
+        }
+    } catch (error) {
+        res.status(400).json({ auth: false, message: "email ou senha incorretos!" });
+    }
 })
 
 export { router };
