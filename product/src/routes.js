@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { createProductUseCase } from "../src/use-case/createProductUseCase.js";
-import { tokenValidated } from './middleware/authenticator.js';
+import { tokenValidated } from './helpers/authenticator.js';
 import { listProducts } from './use-case/listProducts.js';
 
 export const router = Router();
@@ -19,7 +19,7 @@ router.post('/products', function (req, res) {
 
     const payload = tokenValidated(req, res)
 
-    if (!payload) return res.status(401).json({ message: 'Access denied. No token provided.' })
+    if (!payload) return res.status(401).send( 'Access denied. No token provided.' )
 
     const id = payload.id
 

@@ -11,6 +11,8 @@ describe('Product Creation', () => {
     })
 
     const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImM3OTRkOWU1LWQ5ODgtNDBlZC05MGIyLWMzYjYzM2MzOGM1YiIsImlhdCI6MTY3NDQ5NDIwNn0.Vjix-yQq9BK3mVWls0A3udLBRW7toDxrGmU2sIyk44g"
+    const tokenError = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
+    const tokenIdEmpty = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2NzQ0OTQyMDZ9.Xk7vQeFPCzbC5wJTkFjOyV0uQNhQFEtTqb2et1NH9Pw"
 
     it('should create a product given required product data', async () => {
 
@@ -57,10 +59,11 @@ describe('Product Creation', () => {
             .set('Content-Type', 'application/json')
             .set('Accept', 'application/json')
             .set('Access-Control-Allow-Origin', '*')
+            .set('Authorization', '')
             .send(produto)
             .expect(401)
             .expect(({ body }) => {
-                expect(body).toEqual({ });
+                expect(body).toEqual({});
             });
     });
 
@@ -71,11 +74,27 @@ describe('Product Creation', () => {
             .set('Content-Type', 'application/json')
             .set('Accept', 'application/json')
             .set('Access-Control-Allow-Origin', '*')
-            .set('Authorization',"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9")
+            .set('Authorization', `${tokenError}`)
             .send(produto)
-            .expect(500)
+            .expect(403)
             .expect(({ body }) => {
-                expect(body).toEqual({ });
+                expect(body).toEqual({});
             });
     });
+
+    it('erro ao criar produto sem o id no token', async () => {
+
+        await request(app)
+            .post('/products')
+            .set('Content-Type', 'application/json')
+            .set('Accept', 'application/json')
+            .set('Access-Control-Allow-Origin', '*')
+            .set('Authorization', `${tokenIdEmpty}`)
+            .send(produto)
+            .expect(403)
+            .expect(({ body }) => {
+                expect(body).toEqual({});
+            });
+    });
+
 });
