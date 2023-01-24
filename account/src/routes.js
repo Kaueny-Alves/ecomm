@@ -38,7 +38,7 @@ router.post('/accounts/login', async (req, res) => {
         const token = await createToken(email, password)
 
         if (token === null) {
-            res.status(401).json({ auth: false, message: "email ou senha incorretos!" });
+            res.status(400).json({ auth: false, message: "email ou senha incorretos!" });
         } else {
             res.status(201).json({ auth: true, token: token });
         }
