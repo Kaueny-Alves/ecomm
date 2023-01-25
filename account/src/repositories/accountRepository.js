@@ -1,36 +1,25 @@
-import { MongoClient } from 'mongodb';
+import { client } from "./clientDatabase.js";
 
-const connectionURL = 'mongodb://admin:admin@account-database:27017'
-const connection = new MongoClient(connectionURL);
 
-async function getUsersCollection() {
-    await connection.connect();
-    const database = connection.db('accounts')
-    return database.collection('users');
+export async function getUsersCollection(client) {
+    const db = client.db('accounts');
+    const usersCollection = db.collection('users');
+    return usersCollection;
 }
 
 export async function saveAccount(account) {
-    try {
-        const collection = await getUsersCollection();
-        await collection.insertOne(account);
-    } catch (e) {
-        console.error("unsaved account =======", e.message.stack);
-    } finally {
-        await connectionClosed()
-    }
+    await client.connect();
+    const usersCollection = await getUsersCollection(client);
+    await usersCollection.insertOne(account);
+    await client.close()
 }
 
-export async function findAccountByEmail(email) {
-    try {
-        const collection = await getUsersCollection();
-        const account = await collection.findOne({ email });
-        return account;
-    } catch (e) {
-        console.error("error fetching email:=======", e.message.stack)
-    }
-}
-
-async function connectionClosed() {
-    connection.close();
-    console.log("connection closed =======")
-}
+// export async function findAccountByEmail(email) {
+//     try {
+//         const collection = await getUsersCollection();
+//         const account = await collection.findOne({ email });
+//         return account;
+//     } catch (e) {
+//         console.error("error fetching email:=======", e.message.stack)
+//     }
+// }

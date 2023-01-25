@@ -1,13 +1,12 @@
 import { Router } from 'express';
 import { createUserUseCase } from "../src/use-case/createUserAccount.js";
 
-
 const router = Router();
 
 router.post('/accounts', function (req, res) {
 
     const { name, email, password } = req.body
-  
+
     createUserUseCase(name, email, password)
         .then((data) => {
 
@@ -15,7 +14,7 @@ router.post('/accounts', function (req, res) {
                 id: data.id,
                 name: data.name,
                 email: data.email,
-                date: data.createdDate
+                createdDate: data.createdDate
             }
 
             res.status(201).json(user);
@@ -30,4 +29,5 @@ router.post('/accounts', function (req, res) {
                 });
         })
 });
+
 export { router };

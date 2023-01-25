@@ -2,7 +2,6 @@ import { Product } from '../models/product.js';
 import { ProductFeature } from '../models/product_feature.js';
 import { ProductImage } from '../models/product_image.js';
 
-
 export async function saveProduct(product) {
 
     const createdProduct = await Product.create(product, {
@@ -14,9 +13,12 @@ export async function saveProduct(product) {
     });
     await createdProduct.save();
     return createdProduct;
+
+
 }
 
 export async function findProducts() {
+
     const allProducts = await Product.findAll({
         include: [
             {
@@ -28,4 +30,5 @@ export async function findProducts() {
             }]
     });
     return allProducts
+
 }

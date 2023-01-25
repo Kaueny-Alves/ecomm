@@ -1,28 +1,39 @@
-import { createProductUseCase } from "../../src/use-case/createProductUseCase.js";
-import { produto } from "./products.js";
+import { app } from "../../src/app";
+import request from 'supertest';
+import { produto } from "../data/products.js";
 
+describe('Product Creation', () => {
 
-export const produto =
-{
-    nome: "coca",
-    valor: 2,
-    quantidade: 1,
-    descricao: "refrigerante lata",
-    categoria: "bebidas",
-    caracteristicas: [
-        {
-            nome: "refrigerante",
-            descricao: " bebidas",
-        }
-    ],
-    imagens: [
-        {
-            url: "https://pixabay.com/pt/photos/posso-lata-de-cola-cola-bebida-592366/",
-            descricao: "refrigerante de lata",
-        }
-    ],
-}
+    it('should create a product given required product data', async () => {
 
-
-const product = await createProductUseCase(produto);
-console.log("product: ", product)
+        await request(app)
+            .post('/products')
+            .set('Content-Type', 'application/json')
+            .set('Accept', 'application/json')
+            .send(produto)
+            .expect(201)
+            .expect(({ body }) => {
+                expect(body).toEqual({
+                    ...produto,
+                    id_user: body.id_user,
+                    id: expect.any(Number),
+                    createdAt: expect.any(String),
+                    updatedAt: expect.any(String),
+                    features: produto.features.map(feature => ({
+                        ...feature,
+                        id: expect.any(Number),
+                        product_id: body.id,
+                        createdAt: expect.any(String),
+                        updatedAt: expect.any(String),
+                    })),
+                    images: produto.images.map(image => ({
+                        ...image,
+                        id: expect.any(Number),
+                        product_id: body.id,
+                        createdAt: expect.any(String),
+                        updatedAt: expect.any(String),
+                    }))
+                });
+            });
+    });
+});
