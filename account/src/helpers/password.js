@@ -1,7 +1,7 @@
 import bcrypt from 'bcryptjs';
 
-export function encodedPassword(password) {
-    const salt = 12;
+export function encodePassword(password) {
+    const salt = parseInt(process.env.SALT);
     const hash = bcrypt.hashSync(password, salt);
     return hash;
 }

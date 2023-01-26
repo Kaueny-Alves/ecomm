@@ -1,5 +1,5 @@
 import { findAccountByEmail } from "../repositories/accountRepository.js";
-import { comparePassword } from "../helpers/encodePassword.js";
+import { comparePassword } from "../helpers/password.js";
 import { generateToken } from "../helpers/authenticator.js";
 
 

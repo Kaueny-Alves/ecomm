@@ -1,17 +1,17 @@
 
 import request from "supertest";
 import { app } from '../../src/app.js'
+import { getUsersCollection } from "../../src/repositories/accountRepository.js";
+import { client } from "../../src/repositories/clientDatabase.js";
 
 
 describe("Account Creation ", () => {
 
-    // afterEach(async () => {
-
-    //     const usersCollection = await getUsersCollection();
-    //     await usersCollection.deleteMany({});
-
-    // });
-
+    afterEach(async () => {
+        const usersCollection = await getUsersCollection();
+        await usersCollection.deleteMany({});
+        await client.close();
+    });
 
     it('should create an user given correct user data', async () => {
         await request(app)

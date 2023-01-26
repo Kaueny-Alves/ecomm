@@ -1,13 +1,10 @@
 import jwt from "jsonwebtoken";
 
-// export function generateToken(id) {
-//     return jwt.sign({ id }, process.env.JWT_KEY, {
-//         expiresIn: process.env.JWT_EXPIRES_IN
-//     });
-
-// }
-
 export function generateToken(id) {
-    return jwt.sign({ id }, process.env.JWT_KEY);
+    const tokenSecret = process.env.JWT_KEY;
+    const tokenExpires = parseInt(process.env.TOKEN_EXPIRATION);
+
+    return token = jwt.sign({ id }, tokenSecret, { expiresIn: `${tokenExpires}s` });
 
 }
+

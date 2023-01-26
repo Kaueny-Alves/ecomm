@@ -4,11 +4,11 @@ import { createToken } from './use-case/createTokenUseCase.js';
 
 const router = Router();
 
-router.post('/accounts/register', async function (req, res) {
+router.post('/accounts/register', function (req, res) {
 
     const { name, email, password } = req.body
 
-    await createUserUseCase(name, email, password)
+    createUserUseCase(name, email, password)
         .then((data) => {
 
             res.status(201).json({

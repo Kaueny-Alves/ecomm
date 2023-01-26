@@ -15,13 +15,6 @@ export async function saveAccount(account) {
     await client.close()
 }
 
-export async function listAccounts() {
-   
-    const usersCollection = await getUsersCollection();
-    const accounts = usersCollection.find().toArray();
-
-    return accounts;
-}
 export async function findAccountByEmail(email) {
    
     const usersCollection = await getUsersCollection();
