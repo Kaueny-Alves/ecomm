@@ -2,6 +2,7 @@ import { app } from "../../src/app";
 import request from 'supertest';
 import { produto } from "../data/products.js";
 import { cleanProductTable } from "../../src/helpers/products";
+import { generateToken } from "../../src/helpers/authenticator";
 
 describe('Product Creation', () => {
     afterEach(async () => {
@@ -10,9 +11,9 @@ describe('Product Creation', () => {
 
     })
 
-    const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImM3OTRkOWU1LWQ5ODgtNDBlZC05MGIyLWMzYjYzM2MzOGM1YiIsImlhdCI6MTY3NDQ5NDIwNn0.Vjix-yQq9BK3mVWls0A3udLBRW7toDxrGmU2sIyk44g"
-    const tokenError = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
-    const tokenIdEmpty = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2NzQ0OTQyMDZ9.Xk7vQeFPCzbC5wJTkFjOyV0uQNhQFEtTqb2et1NH9Pw"
+    const id_user = "c794d9e5-d988-40ed-90b2-c3b633c38c5b"
+    const token = generateToken(id_user) 
+    const tokenIdEmpty = generateToken()
 
     it('should create a product given required product data', async () => {
 
@@ -21,9 +22,6 @@ describe('Product Creation', () => {
             .set('Content-Type', 'application/json')
             .set('Accept', 'application/json')
             .set('Access-Control-Allow-Origin', '*')
-            .set('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE')
-            .set('Access-Control-Allow-Headers', 'X-Requested-With,content-type')
-            .set('Access-Control-Allow-Credentials', true)
             .set('Authorization', `${token}`)
             .send(produto)
             .expect(201)
@@ -74,7 +72,7 @@ describe('Product Creation', () => {
             .set('Content-Type', 'application/json')
             .set('Accept', 'application/json')
             .set('Access-Control-Allow-Origin', '*')
-            .set('Authorization', `${tokenError}`)
+            .set('Authorization', `${token + " a"}`)
             .send(produto)
             .expect(403)
             .expect(({ body }) => {

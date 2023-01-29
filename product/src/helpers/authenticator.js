@@ -1,4 +1,4 @@
-import * as jwt from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 
 export function tokenValidated(req, res) {
 
@@ -14,5 +14,13 @@ export function tokenValidated(req, res) {
         return {};
     }
 
+
+}
+
+export function generateToken(id) {
+    const tokenSecret = process.env.JWT_KEY;
+    const tokenExpires = process.env.TOKEN_EXPIRATION;
+    const token = jwt.sign({ id }, tokenSecret, { expiresIn: `${tokenExpires}s` });
+    return token
 
 }
