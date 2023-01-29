@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { createUserUseCase } from "../src/use-case/createUserAccount.js";
 import { createToken } from './use-case/createTokenUseCase.js';
 
+
 const router = Router();
 
 router.post('/accounts/register', function (req, res) {
@@ -33,16 +34,20 @@ router.post('/accounts/register', function (req, res) {
 router.post('/accounts/login', async (req, res) => {
 
     const { email, password } = req.body
+    console.log(email, password)
+
 
     try {
         const token = await createToken(email, password)
-
+        console.log(token)
         if (token === null) {
+
             res.status(400).json({ auth: false, message: "email ou senha incorretos!" });
         } else {
             res.status(201).json({ auth: true, token: token });
         }
     } catch (error) {
+        console.log(error)
         res.status(400).json({ auth: false, message: "email ou senha incorretos!" });
     }
 })

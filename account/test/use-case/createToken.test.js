@@ -1,11 +1,11 @@
-
 import request from "supertest";
 import { app } from '../../src/app.js'
+import { createUserUseCase } from "../../src/use-case/createUserAccount.js";
 
 
-describe("Account Creation ", () => {
-
+describe("Create a Token", () => {
     it('create a token', async () => {
+        await createUserUseCase('Kaueny', 'kaueny@pagonxt.com', '123pago@23');
         await request(app)
             .post('/accounts/login')
             .set('Content-Type', 'application/json')
@@ -23,6 +23,7 @@ describe("Account Creation ", () => {
             });
     });
     it('erro ao criar o token com o email errado', async () => {
+       
         await request(app)
             .post('/accounts/login')
             .set('Content-Type', 'application/json')
@@ -40,6 +41,7 @@ describe("Account Creation ", () => {
             });
     });
     it('erro ao criar o token com password errado', async () => {
+       
         await request(app)
             .post('/accounts/login')
             .set('Content-Type', 'application/json')

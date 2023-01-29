@@ -4,7 +4,7 @@ import { encodePassword } from '../helpers/password.js'
 
 export async function createUserUseCase(name, email, password) {
 
-    const accountAlreadyExists = await findAccountByEmail(email);
+    //const accountAlreadyExists = await findAccountByEmail(email);
 
     // if (accountAlreadyExists !== null) {
     //     console.error('Account already exists', email);

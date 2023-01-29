@@ -37,34 +37,59 @@ paths:
                   $ref: "#/components/schemas/AccountDataError"
 
   /accounts/loggin:
-    description: "login"
+    description: "Given provided account data, creates an account"
     post:
       tags: [Account]
-      summary: "criação de token"
       requestBody:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/AccountLogin"
+              $ref: "#/components/schemas/CreateAccountRequest"
       responses:
         201:
-          description: token created
+          description: Account created
           content:
             application/json:
               schema:
-                items:
-                  $ref: "#/components/schemas/AccountToken"
+                $ref: "#/components/schemas/AccountResponse"
+  /tokens:
+    summary: creates an account token
+    description: "Given email and password, creates an account token"
+    post:
+      tags: [Account]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        201:
+          description: Token account created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
         400:
-          description: token error
+          description: Error with account data
           content:
             application/json:
               schema:
-                items:
-                  $ref: "#/components/schemas/AccountTokenError"
+                type: object
+                properties:
+                  message:
+                    type: string
 
 components:
   schemas:
-    AccountData:
+    CreateAccountRequest:
       type: object
       properties:
         name:
@@ -73,14 +98,7 @@ components:
           type: string
         password:
           type: string
-    AccountDataError:
-      type: object
-      properties:
-        status:
-          type: string
-        message:
-          type: string
-    CreatedAccountData:
+    AccountResponse:
       type: object
       properties:
         id:
@@ -90,25 +108,4 @@ components:
         email:
           type: string
         createdDate:
-          type: string
-    AccountToken:
-      type: object
-      properties:
-        auth:
-          type: string
-        token:
-          type: string
-    AccountTokenError:
-      type: object
-      properties:
-        auth:
-          type: string
-        message:
-          type: string
-    AccountLogin:
-      type: object
-      properties:
-        email:
-          type: string
-        password:
           type: string
