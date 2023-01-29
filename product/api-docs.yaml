@@ -8,103 +8,160 @@ info:
         url: "https://www.eccom.com.br"
         email: sac@eccom.com.br
 servers:
-    - url: "http://localhost:3000"
+    - url: "http://localhost:3001"
       description: Server 1
 paths:
     /products:
         summary: creates a product
         description: "Given provided product data, creates a product in the database"
         post:
-            tags: [ Product ]
+            tags: [Product]
+            security:
+                - bearerAuth: []
             requestBody:
                 content:
                     application/json:
                         schema:
-                            $ref: "#/components/schemas/ProductData"
+                            $ref: "#/components/schemas/CreateProductRequest"
             responses:
                 201:
                     description: Product created
                     content:
                         application/json:
                             schema:
-                                $ref: "#/components/schemas/CreatedProductData"
-
+                                $ref: "#/components/schemas/ProductResponse"
+                400:
+                    description: Product error
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    message:
+                                        type: string
+                401:
+                    description: Product error
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    message:
+                                        type: string
+                403:
+                    description: Product error
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    message:
+                                        type: string
         get:
-            tags: [ Product ]
-            summary: "lista de produtos cadastrados"
             responses:
                 200:
-                    description: Success
+                    description: Products list
                     content:
                         application/json:
                             schema:
                                 type: array
                                 items:
-                                    $ref: "#/components/schemas/ProductData"
+                                    $ref: "#/components/schemas/ProductResponse"
 
 components:
+    securitySchemes:
+        bearerAuth:
+            type: http
+            scheme: bearer
+            bearerFormat: JWT
     schemas:
-        ImagemData:
+        ImageResponse:
+            type: object
+            properties:
+                id:
+                    type: integer
+                url:
+                    type: string
+                description:
+                    type: string
+                createdDate:
+                    type: string
+                updatedDate:
+                    type: string
+        FeatureResponse:
+            type: object
+            properties:
+                id:
+                    type: integer
+                name:
+                    type: string
+                description:
+                    type: string
+                createdDate:
+                    type: string
+                updatedDate:
+                    type: string
+        ProductResponse:
+            type: object
+            properties:
+                id:
+                    type: integer
+                user_id:
+                    type: string
+                name:
+                    type: string
+                description:
+                    type: string
+                category:
+                    type: string
+                quantity:
+                    type: integer
+                value:
+                    type: number
+                createdDate:
+                    type: string
+                updatedDate:
+                    type: string
+                features:
+                    type: array
+                    items:
+                        $ref: "#/components/schemas/FeatureResponse"
+                images:
+                    type: array
+                    items:
+                        $ref: "#/components/schemas/ImageResponse"
+        CreateProductRequest:
+            type: object
+            properties:
+                name:
+                    type: string
+                description:
+                    type: string
+                category:
+                    type: string
+                quantity:
+                    type: integer
+                value:
+                    type: number
+                features:
+                    type: array
+                    items:
+                        $ref: "#/components/schemas/CreateFeatureRequest"
+                images:
+                    type: array
+                    items:
+                        $ref: "#/components/schemas/CreateImageRequest"
+        CreateImageRequest:
             type: object
             properties:
                 url:
                     type: string
-                descricao:
+                description:
                     type: string
-        CaracteristicaData:
+        CreateFeatureRequest:
             type: object
             properties:
-                nome:
-                    type: string
-                descricao:
-                    type: string
-        ProductData:
-            type: object
-            properties:
-                usuarioId:
-                    type: string
                 name:
                     type: string
                 description:
                     type: string
-                category:
-                    type: string
-                quantity:
-                    type: integer
-                value:
-                    type: number
-                features:
-                    type: array
-                    items:
-                        $ref: "#/components/schemas/CaracteristicaData"
-                images:
-                    type: array
-                    items:
-                        $ref: "#/components/schemas/ImagemData"
-        CreatedProductData:
-            type: object
-            properties:
-                usuarioId:
-                    type: string
-                createdDate:
-                    type: string
-                id:
-                    type: string
-                name:
-                    type: string
-                description:
-                    type: string
-                category:
-                    type: string
-                quantity:
-                    type: integer
-                value:
-                    type: number
-                features:
-                    type: array
-                    items:
-                        $ref: "#/components/schemas/CaracteristicaData"
-                images:
-                    type: array
-                    items:
-                        $ref: "#/components/schemas/ImagemData"

@@ -1,33 +1,55 @@
 import { Router } from 'express';
 import { createUserUseCase } from "../src/use-case/createUserAccount.js";
+import { createToken } from './use-case/createTokenUseCase.js';
+
 
 const router = Router();
 
-router.post('/accounts', function (req, res) {
+router.post('/accounts/register', function (req, res) {
 
     const { name, email, password } = req.body
 
     createUserUseCase(name, email, password)
         .then((data) => {
 
-            const user = {
+            res.status(201).json({
                 id: data.id,
                 name: data.name,
                 email: data.email,
                 createdDate: data.createdDate
-            }
-
-            res.status(201).json(user);
+            });
 
         })
         .catch((error) => {
 
-            res.status(400)
+            res.status(500)
                 .json({
                     status: 'Error creating user!',
                     message: error.message
                 });
         })
+
 });
+
+router.post('/accounts/login', async (req, res) => {
+
+    const { email, password } = req.body
+    console.log(email, password)
+
+
+    try {
+        const token = await createToken(email, password)
+        console.log(token)
+        if (token === null) {
+
+            res.status(400).json({ auth: false, message: "email ou senha incorretos!" });
+        } else {
+            res.status(201).json({ auth: true, token: token });
+        }
+    } catch (error) {
+        console.log(error)
+        res.status(400).json({ auth: false, message: "email ou senha incorretos!" });
+    }
+})
 
 export { router };

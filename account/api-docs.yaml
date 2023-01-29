@@ -1,0 +1,111 @@
+openapi: 3.0.1
+info:
+  version: 1.0.0
+  title: Accounts API
+  description: Restful API that deals with Accounts
+  contact:
+    name: Sac Contacts
+    url: "https://www.eccom.com.br"
+    email: sac@eccom.com.br
+servers:
+  - url: "http://localhost:3000"
+    description: Server 1
+paths:
+  /accounts/register:
+    description: "Given provided account data, creates a account in the database"
+    post:
+      tags: [Account]
+      summary: "cadastro de usuário"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AccountData"
+      responses:
+        201:
+          description: Product created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CreatedAccountData"
+        500:
+          description: Error creating account
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: "#/components/schemas/AccountDataError"
+
+  /accounts/loggin:
+    description: "Given provided account data, creates an account"
+    post:
+      tags: [Account]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateAccountRequest"
+      responses:
+        201:
+          description: Account created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AccountResponse"
+  /tokens:
+    summary: creates an account token
+    description: "Given email and password, creates an account token"
+    post:
+      tags: [Account]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        201:
+          description: Token account created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+        400:
+          description: Error with account data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+
+components:
+  schemas:
+    CreateAccountRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+    AccountResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        email:
+          type: string
+        createdDate:
+          type: string

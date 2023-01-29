@@ -1,15 +1,17 @@
 import { app } from "./app.js";
 import swaggerUi from "swagger-ui-express";
-import apiDocs from '../api-docs.json' assert { type: "json" };
+import yaml from 'yamljs';
 
 const port = 3000;
 
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(apiDocs))
+const swaggerDocs = yaml.load('api-docs.yaml');
+
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs))
 
 app.listen(port, () => {
   console.log(`Account app listening on port ${port}`)
 
- });
+});
 
 
 
