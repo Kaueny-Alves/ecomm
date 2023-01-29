@@ -39,7 +39,6 @@ router.post('/accounts/login', async (req, res) => {
 
     try {
         const token = await createToken(email, password)
-        console.log(token)
         if (token === null) {
 
             res.status(400).json({ auth: false, message: "email ou senha incorretos!" });
@@ -47,7 +46,6 @@ router.post('/accounts/login', async (req, res) => {
             res.status(201).json({ auth: true, token: token });
         }
     } catch (error) {
-        console.log(error)
         res.status(400).json({ auth: false, message: "email ou senha incorretos!" });
     }
 })
