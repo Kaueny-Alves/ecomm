@@ -5,37 +5,27 @@ import { createToken } from './use-case/createTokenUseCase.js';
 
 const router = Router();
 
-router.post('/accounts/register', function (req, res) {
+router.post('/accounts/register', async function (req, res, next) {
 
     const { name, email, password } = req.body
 
-    createUserUseCase(name, email, password)
-        .then((data) => {
+    const user = await createUserUseCase(name, email, password);
+    if (user === 400) {
+        res.status(400).json({ message: 'Account already exists' })
+        return next();
+    }
 
-            res.status(201).json({
-                id: data.id,
-                name: data.name,
-                email: data.email,
-                createdDate: data.createdDate
-            });
-
-        })
-        .catch((error) => {
-
-            res.status(500)
-                .json({
-                    status: 'Error creating user!',
-                    message: error.message
-                });
-        })
-
+    res.status(201).json({
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        createdDate: user.createdDate
+    });
 });
 
 router.post('/accounts/login', async (req, res) => {
 
     const { email, password } = req.body
-    console.log(email, password)
-
 
     try {
         const token = await createToken(email, password)

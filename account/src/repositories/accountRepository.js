@@ -12,7 +12,6 @@ export async function saveAccount(account) {
     
     const usersCollection = await getUsersCollection();
     await usersCollection.insertOne(account);
-    await client.close()
 }
 
 export async function findAccountByEmail(email) {

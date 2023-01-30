@@ -1,9 +1,18 @@
 import request from "supertest";
 import { app } from '../../src/app.js'
+import { getUsersCollection } from "../../src/repositories/accountRepository.js";
+import { client } from "../../src/repositories/clientDatabase.js";
 import { createUserUseCase } from "../../src/use-case/createUserAccount.js";
 
 
 describe("Create a Token", () => {
+
+    afterEach(async () => {
+
+        const usersCollection = await getUsersCollection();
+        await usersCollection.deleteMany({});
+    });
+
     it('create a token', async () => {
         await createUserUseCase('Kaueny', 'kaueny@pagonxt.com', '123pago@23');
         await request(app)
@@ -23,7 +32,7 @@ describe("Create a Token", () => {
             });
     });
     it('erro ao criar o token com o email errado', async () => {
-       
+        await createUserUseCase('Kaueny', 'kaueny@pagonxt.com', '123pago@23');
         await request(app)
             .post('/accounts/login')
             .set('Content-Type', 'application/json')
@@ -41,7 +50,7 @@ describe("Create a Token", () => {
             });
     });
     it('erro ao criar o token com password errado', async () => {
-       
+        await createUserUseCase('Kaueny', 'kaueny@pagonxt.com', '123pago@23');
         await request(app)
             .post('/accounts/login')
             .set('Content-Type', 'application/json')
