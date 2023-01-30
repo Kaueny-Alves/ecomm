@@ -6,10 +6,8 @@ export async function createUserUseCase(name, email, password) {
 
     const accountAlreadyExists = await findAccountByEmail(email);
 
-    if (accountAlreadyExists !== null) {
-        const status = 400
-        return status
-
+    if (accountAlreadyExists !== null) {    
+        return 
     }
 
     const id = randomUUID();

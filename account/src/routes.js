@@ -9,18 +9,24 @@ router.post('/accounts/register', async function (req, res, next) {
 
     const { name, email, password } = req.body
 
-    const user = await createUserUseCase(name, email, password);
-    if (user === 400) {
-        res.status(400).json({ message: 'Account already exists' })
-        return next();
+    try {
+        const user = await createUserUseCase(name, email, password);
+        if (user === undefined) {
+            res.status(400).json({ message: 'Account already exists' })
+            return next();
+        }
+
+        res.status(201).json({
+            id: user.id,
+            name: user.name,
+            email: user.email,
+            createdDate: user.createdDate
+        });
+    } catch (e) {
+        res.status(400).json({ message: 'Account already exists', e })
     }
 
-    res.status(201).json({
-        id: user.id,
-        name: user.name,
-        email: user.email,
-        createdDate: user.createdDate
-    });
+
 });
 
 router.post('/accounts/login', async (req, res) => {
