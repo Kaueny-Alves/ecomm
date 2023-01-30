@@ -20,39 +20,25 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/AccountData"
+              $ref: "#/components/schemas/CreateAccountRequest"
       responses:
         201:
           description: Product created
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/CreatedAccountData"
-        500:
+                $ref: "#/components/schemas/AccountResponse"
+        400:
           description: Error creating account
           content:
             application/json:
               schema:
-                items:
-                  $ref: "#/components/schemas/AccountDataError"
+                type: object
+                properties:
+                  message:
+                    type: string
 
   /accounts/loggin:
-    description: "Given provided account data, creates an account"
-    post:
-      tags: [Account]
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/CreateAccountRequest"
-      responses:
-        201:
-          description: Account created
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/AccountResponse"
-  /tokens:
     summary: creates an account token
     description: "Given email and password, creates an account token"
     post:
