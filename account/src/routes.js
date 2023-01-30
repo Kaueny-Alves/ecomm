@@ -5,41 +5,36 @@ import { createToken } from './use-case/createTokenUseCase.js';
 
 const router = Router();
 
-router.post('/accounts/register', function (req, res) {
+router.post('/accounts/register', async function (req, res, next) {
 
     const { name, email, password } = req.body
 
-    createUserUseCase(name, email, password)
-        .then((data) => {
+    try {
+        const user = await createUserUseCase(name, email, password);
+        if (user === undefined) {
+            res.status(400).json({ message: 'Account already exists' })
+            return next();
+        }
 
-            res.status(201).json({
-                id: data.id,
-                name: data.name,
-                email: data.email,
-                createdDate: data.createdDate
-            });
+        res.status(201).json({
+            id: user.id,
+            name: user.name,
+            email: user.email,
+            createdDate: user.createdDate
+        });
+    } catch (e) {
+        res.status(400).json({ message: 'Account already exists', e })
+    }
 
-        })
-        .catch((error) => {
-
-            res.status(500)
-                .json({
-                    status: 'Error creating user!',
-                    message: error.message
-                });
-        })
 
 });
 
 router.post('/accounts/login', async (req, res) => {
 
     const { email, password } = req.body
-    console.log(email, password)
-
 
     try {
         const token = await createToken(email, password)
-        console.log(token)
         if (token === null) {
 
             res.status(400).json({ auth: false, message: "email ou senha incorretos!" });
@@ -47,7 +42,6 @@ router.post('/accounts/login', async (req, res) => {
             res.status(201).json({ auth: true, token: token });
         }
     } catch (error) {
-        console.log(error)
         res.status(400).json({ auth: false, message: "email ou senha incorretos!" });
     }
 })

@@ -3,8 +3,10 @@ import swaggerUi from "swagger-ui-express";
 import yaml from 'yamljs';
 import { app } from "./app.js";
 import { client } from './repositories/clientDatabase.js';
+import dotenv from "dotenv";
 
-const port = 3000;
+dotenv.config()
+const port = process.env.PORT;
 
 const swaggerDocs = yaml.load('api-docs.yaml');
 
