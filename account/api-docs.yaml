@@ -38,7 +38,7 @@ paths:
                   message:
                     type: string
 
-  /accounts/loggin:
+  /accounts/login:
     summary: creates an account token
     description: "Given email and password, creates an account token"
     post:
