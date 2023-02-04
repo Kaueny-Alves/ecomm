@@ -15,25 +15,24 @@ router.get('/products', (req, res) => {
         })
 });
 
-router.post('/products', function (req, res) {
+router.post('/products', async function (req, res) {
 
     const payload = tokenValidated(req, res)
 
-    if (!payload) return res.status(401).send( 'Access denied. No token provided.' )
+    if (!payload) return res.status(401).send('Access denied. No token provided.')
 
     const id = payload.id
 
     if (!id) return res.status(403).send('Forbidden.')
 
-    const product = req.body
+    const productToCreate = req.body;
+    const { hasErrors, errors, product } = await createProductUseCase(productToCreate, id);
+    
+    if(hasErrors) {
+        return res.status(400).json(errors);
+    }
 
-    createProductUseCase(product, id)
-        .then((data) => {
-            res.status(201).json(data);
-        })
-        .catch((error) => {
-            res.json({ status: 'Error fetching products!', message: error.message });
-        })
+    return res.status(201).json(product);
 });
 
 
