@@ -38,7 +38,7 @@ export async function createProductUseCase(product, id) {
     }
 
     const products = await saveProduct(createProduct)
-    console.log(products)
+  
     return {
         hasErrors: false,
         errors: undefined,
