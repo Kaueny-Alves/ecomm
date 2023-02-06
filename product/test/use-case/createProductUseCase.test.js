@@ -11,24 +11,18 @@ describe('Product Creation', () => {
 
     })
 
-    const id_user = "c794d9e5-d988-40ed-90b2-c3b633c38c5b"
-    const token = generateToken(id_user) 
-    const tokenIdEmpty = generateToken()
-
     it('should create a product given required product data', async () => {
-
+        const token = generateToken("c794d9e5-d988-40ed-90b2-c3b633c38c5b")
         await request(app)
             .post('/products')
             .set('Content-Type', 'application/json')
             .set('Accept', 'application/json')
-            .set('Access-Control-Allow-Origin', '*')
-            .set('Authorization', `${token}`)
+            .set('Authorization', `Bearer ${token}`)
             .send(produto)
             .expect(201)
             .expect(({ body }) => {
                 expect(body).toEqual({
                     ...produto,
-                    id_user: body.id_user,
                     id: expect.any(Number),
                     createdAt: expect.any(String),
                     updatedAt: expect.any(String),
@@ -61,12 +55,12 @@ describe('Product Creation', () => {
             .send(produto)
             .expect(401)
             .expect(({ body }) => {
-                expect(body).toEqual({});
+                expect(body).toEqual({ message: 'authentication required' });
             });
     });
 
     it('erro ao criar produto com o token errado', async () => {
-
+        const token = generateToken("c794d9e5-d988-40ed-90b2-c3b633c38c5b")
         await request(app)
             .post('/products')
             .set('Content-Type', 'application/json')
@@ -76,12 +70,12 @@ describe('Product Creation', () => {
             .send(produto)
             .expect(403)
             .expect(({ body }) => {
-                expect(body).toEqual({});
+                expect(body).toEqual({ message: "Forbidden." });
             });
     });
 
     it('erro ao criar produto sem o id no token', async () => {
-
+        const tokenIdEmpty = generateToken()
         await request(app)
             .post('/products')
             .set('Content-Type', 'application/json')
@@ -89,9 +83,9 @@ describe('Product Creation', () => {
             .set('Access-Control-Allow-Origin', '*')
             .set('Authorization', `${tokenIdEmpty}`)
             .send(produto)
-            .expect(403)
+            .expect(401)
             .expect(({ body }) => {
-                expect(body).toEqual({});
+                expect(body).toEqual({ message: "authentication required" });
             });
     });
 
